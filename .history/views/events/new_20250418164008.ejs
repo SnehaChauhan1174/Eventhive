@@ -1,0 +1,29 @@
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+    <h3>Create an Event</h3>
+    <form method="post" action="/events">
+        <label for="title" class="form-label">Title</label>
+        <input name="event[title]" placeholder="enter title">
+        <br><br>
+        <textarea name="event[description]" placeholder="enter description"></textarea>
+        <br><br>
+        <input name="event[date]" placeholder="enter date" type="date">
+        <br><br>
+        <input name="event[time]" placeholder="enter time" type="text">
+        <br><br>
+        <input name="event[category]" placeholder="enter category" type="text">
+        <br><br>
+        <input name="event[location]" placeholder="enter location" type="text">
+        <br><br>
+        <input name="event[image]" placeholder="enter image url" type="text">
+        <br><br>
+        <input name="event[price]" placeholder="enter price" type="number">
+        <br><br>
+        <input name="event[attendeeCount]" placeholder="enter attendeeCount" type="number">
+        <br><br>
+        <button>Create</button>
+        
+       
+
+    </form>
+</body>

@@ -1,0 +1,33 @@
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+    <h3>All Events</h3>
+    <!-- <form method="get" action="/events/new">
+        <button>Create Events</button>
+    </form> -->
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+    <% for(let event of allEvents) { %>
+    <div class="card" style="width: 20rem;">
+        <img src="<%= event.image %>" class="card-img-top" alt="event_image">
+        <div class="card-body">
+          <h6 class="card-title"><%= event.title %></h6>
+          <p class="card-text"><%= event.description.substring(0,100)%>...</p>
+          <p>
+            <%= new Date(event.date).toLocaleDateString('en-US', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }) %>
+          </p>
+          
+          <p> &#8377;<%= event.price.toLocaleString("en-IN") %> </p>
+          <p><%=event.location %></p>
+          <a href="#" class="btn btn-primary book-btn">Book Event</a>
+        </div>
+      </div>
+    <%}%>
+    </div>
+    
+</body>
+
+

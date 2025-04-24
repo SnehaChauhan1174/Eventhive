@@ -1,0 +1,13 @@
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+    <h3>All Events</h3>
+    <!-- <form method="get" action="/events/new">
+        <button>Create Events</button>
+    </form> -->
+    <% for(let event of allEvents) { %>
+        <li><a href="/events/<%= event._id %>"><%= event.title %></a></li>
+
+    <%}%>
+</body>
+
+

@@ -1,0 +1,87 @@
+<% layout('/layouts/boilerplate.ejs') %>
+
+    
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+        <br><br>
+        <h3>Create an Event</h3>
+        <form method="post" action="/events">
+        
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="event[title]" placeholder="enter title" class="form-control">
+
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="event[description]" placeholder="enter description" class="form-control"></textarea>
+
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="date" class="form-label">Date</label>
+            <input name="event[date]" placeholder="enter date" type="date" class="form-control">
+
+          </div>
+        
+          <div class="mb-3 col-md-8">
+            <label for="time" class="form-label">Time</label>
+            <input name="event[time]" placeholder="enter time" type="text" class="form-control">
+
+          </div>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="event[category]" id="category" class="form-control form-select shadow-sm rounded-3 px-3 py-2" required>
+              <option value="" disabled selected>Select a category</option>
+              <option value="Conference">Conference</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Concert">Concert</option>
+              <option value="Meetup">Meetup</option>
+              <option value="Webinar">Webinar</option>
+              <option value="Fashion Show">Fashion Show</option>
+              <option value="Press Conference">Press Conference</option>
+              <option value="Theatre">Theatre</option>
+              <option value="Cultural Event">Cultural Event</option>
+              <option value="Sports Events">Sports Events</option>
+              <option value="Wellness">Wellness</option>
+              <option value="Awareness">Awareness</option>
+              <option value="Exhibition">Exhibition</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Science">Science</option>
+              <option value="Technical Event">Technical Event</option>
+            </select>
+          </div>
+          
+        
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input name="event[location]" placeholder="enter location" type="text" class="form-control">
+
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-8">
+            <label for="image" class="form-label">Image</label>
+            <input name="event[image]" placeholder="enter image url" type="text" class="form-control">
+
+        </div>
+       
+           <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input name="event[price]" placeholder="enter price" type="number" class="form-control">
+
+           </div>
+        </div>
+           <div class="mb-3">
+            <lable for="attendeeCount" class="form-label">Attendee Count</lable>
+            <input name="event[attendeeCount]" placeholder="enter attendeeCount" type="number" class="form-control">
+
+           </div>
+       
+        
+        <button class="btn btn-dark create-btn mt-3">Create</button>
+        <br><br>
+    </form>
+</div>
+</div>
+

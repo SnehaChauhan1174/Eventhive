@@ -1,0 +1,57 @@
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+    <h3>Edit your Event</h3>
+    <form method="post" action="/events/<%= event._id %>?_method=put">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input name="event[title]" value="<%= event.title %>" class="form-control">
+
+    </div>
+        
+        
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="event[description]" class="form-control"><%= event.description %></textarea>
+
+    </div>
+        
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input name="event[date]" value="<%= event.date %>" type="date" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="time" class="form-label">Time</label>
+        <input name="event[time]" value="<%= event.time %>" type="text" class="form-control">
+    </div>
+        
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input name="event[category]" value="<%= event.category %>" type="text" class="form-control">
+    </div>
+        
+    <div class="mb-3">
+        <label for="loaction" class="form-label">Location</label>
+        <input name="event[location]" value="<%= event.location %>" type="text" class="form-control">
+    </div>
+    <div class="row"   
+    <div class="mb-3 col-md-6">
+        <label for="image" class="form-label">Image</label>
+        <input name="event[image]" value="<%= event.image %>" type="text" class="form-control">
+    </div>
+        
+    <div class="mb-3 col-md-6">
+        <label for="price" class="form-label">Price</label>
+        <input name="event[price]" value="<%= event.price %>" type="number" class="form-control">
+    </div>
+    </div>
+    <div class="mb-3">
+        <label for="attendeeCount" class="form-label">Attendee Count</label>
+        <input name="event[attendeeCount]" value="<%= event.attendeeCount %>" type="number" class="form-control">
+    </div>
+        
+        <button class="btn btn-dark edit-btn">Edit</button>
+        
+       
+
+    </form>
+</body>
