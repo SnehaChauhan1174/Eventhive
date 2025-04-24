@@ -1,0 +1,65 @@
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+    <h3>Create an Event</h3>
+    <div class="row">
+        <div class="col-8 offset-2">
+    <form method="post" action="/events">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="event[title]" placeholder="enter title" class="form-control">
+
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="event[description]" placeholder="enter description" class="form-control"></textarea>
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input name="event[date]" placeholder="enter date" type="date" class="form-control">
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="time" class="form-label">Time</label>
+            <input name="event[time]" placeholder="enter time" type="text" class="form-control">
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input name="event[category]" placeholder="enter category" type="text" class="form-control">
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input name="event[location]" placeholder="enter location" type="text" class="form-control">
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input name="event[image]" placeholder="enter image url" type="text" class="form-control">
+
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input name="event[price]" placeholder="enter price" type="number" class="form-control">
+
+        </div>
+        
+        <div class="mb-3 col-md-8">
+            <lable for="attendeeCount" class="form-label">Attendee Count</lable>
+            <input name="event[attendeeCount]" placeholder="enter attendeeCount" type="number" class="form-control">
+
+        </div>
+        </div>
+        <br>
+        <button class="btn btn-dark">Create</button>
+    </form>
+</div>
+</div>
+</body>
