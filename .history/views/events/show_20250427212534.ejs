@@ -1,0 +1,33 @@
+<% layout('/layouts/boilerplate.ejs') %>
+
+<div class="row">
+    <div class="col-8 offset-2">
+
+   
+    <h3>Events details</h3>
+    <div class="card" >
+        <img src="<%=event.image %>" class="card-img-top show-img" alt="event_img">
+        <div class="card-body">
+          <p class="card-text"><%= event.title %></p>
+        </div>
+      </div>
+    <ul>
+        <li><%= event.title %></li>
+        <li><%= event.description %></li>
+        <li><%= event.date %></li>
+        <li><%= event.time %></li>
+        <li><%= event.location %></li>
+        <li><%= event.category %></li>
+        <li>&#8377;<%= event.price.toLocaleString('en-IN') %></li>
+        <li><%= event.attendeeCount %></li>
+        
+    </ul>
+    <br>
+    <a href="/events/<%= event._id %>/edit">Edit Event</a>
+    <br><br>
+    <form method="post" action="/events/<%=event._id%>?_method=Delete">
+        <button>Delete Event</button>
+    </form>
+</div>
+</div>
+
