@@ -34,7 +34,7 @@ body{
     justify-content: space-between;
     gap: 2rem; 
     flex-wrap: wrap;
-    height:50vh;
+    height:30vh;
 }
 .f-info > div {
     flex: 1; /* let each div take equal space */
@@ -125,24 +125,10 @@ body{
 .edit-btn {
     background-color: #584533 !important;
     border: none !important;
-    margin-bottom: 30px;
 }
 
 /* show page */
 .show-img{
     height:50vh;
 
-}
-.show-btns{
-    display: flex;
-    margin-bottom: 10px;
-    margin-top: 40px;
-    gap:10px;
-
-}
-.del-btn{
-    margin-left: 20px;
-}
-.edit-btnn{
-    background-color: #584533 !important;
 }
