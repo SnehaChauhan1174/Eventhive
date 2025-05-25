@@ -7,8 +7,7 @@ const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const wrapAsync=require('./utils/wrapAsync');
 const ExpressError=require('./utils/ExpressError');
-const {eventSchema}=require('./schema.js')
-;
+
 const MONGO_URL='mongodb://127.0.0.1:27017/EventHive';
 
 main().then(()=>{
@@ -53,8 +52,8 @@ app.get("/events/:id",wrapAsync(async(req,res)=>{
 
 //create route
 app.post('/events',wrapAsync(async(req,res)=>{
-   if(!req.body.event){//server side error handling
-      throw new ExpressError(400,"Send valid data!");
+   if(!req.body.event){
+      throw new ExpressError(400,"Send valid data");
    }
    //making a new event instance
    const newEvent=new Events(req.body.event);
@@ -73,7 +72,7 @@ app.get('/events/:id/edit',wrapAsync(async(req,res)=>{
 //update route
 app.put('/events/:id',wrapAsync(async(req,res)=>{
     if(!req.body.event){
-        throw new ExpressError(400,"Send valid data!");
+        throw new ExpressError(400,"Send valid data");
      }
     let {id}=req.params;
     await Events.findByIdAndUpdate(id,{...req.body.event});//sec argument is an object containing all new values , we are destructuring it so that pass in to update
@@ -89,12 +88,12 @@ app.delete('/events/:id',wrapAsync(async(req,res)=>{
 
 //catch all unmatched routes
 app.use("*",(re,res,next)=>{
-    next(new ExpressError(404,"Page not found!"));
+    next(new ExpressError(404,"page not found"));
 })
 
 app.use((err,req,res,next)=>{
-    let {statusCode = 500, message = "Something went wrong!"}=err
-    res.status(statusCode).render('error.ejs',{err});
+    let {statusCode = 500, message = "something went wrong"}=err
+    res.render('error.ejs');
 })
 
 app.listen(8080,()=>{

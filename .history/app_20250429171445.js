@@ -7,8 +7,7 @@ const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const wrapAsync=require('./utils/wrapAsync');
 const ExpressError=require('./utils/ExpressError');
-const {eventSchema}=require('./schema.js')
-;
+
 const MONGO_URL='mongodb://127.0.0.1:27017/EventHive';
 
 main().then(()=>{
@@ -53,7 +52,7 @@ app.get("/events/:id",wrapAsync(async(req,res)=>{
 
 //create route
 app.post('/events',wrapAsync(async(req,res)=>{
-   if(!req.body.event){//server side error handling
+   if(!req.body.event){
       throw new ExpressError(400,"Send valid data!");
    }
    //making a new event instance

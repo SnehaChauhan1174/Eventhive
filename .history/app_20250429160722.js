@@ -6,9 +6,7 @@ const path=require('path');
 const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const wrapAsync=require('./utils/wrapAsync');
-const ExpressError=require('./utils/ExpressError');
-const {eventSchema}=require('./schema.js')
-;
+
 const MONGO_URL='mongodb://127.0.0.1:27017/EventHive';
 
 main().then(()=>{
@@ -40,61 +38,49 @@ app.get('/events',async(req,res)=>{
 })
 
 //creating new event
-app.get('/events/new',wrapAsync(async(req,res)=>{
+app.get('/events/new',async(req,res)=>{
     res.render('events/new.ejs');
-}))
+})
 
 //show event
-app.get("/events/:id",wrapAsync(async(req,res)=>{
+app.get("/events/:id",async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
     res.render('events/show.ejs',{event});
-}))
+})
 
 //create route
-app.post('/events',wrapAsync(async(req,res)=>{
-   if(!req.body.event){//server side error handling
-      throw new ExpressError(400,"Send valid data!");
-   }
+app.post('/events',wrapAsyncasync(req,res)=>{
+   
    //making a new event instance
    const newEvent=new Events(req.body.event);
    await newEvent.save();
    res.redirect('/events');
-
-}))
+   
+})
 
 //edit route
-app.get('/events/:id/edit',wrapAsync(async(req,res)=>{
+app.get('/events/:id/edit',async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
     res.render('events/edit.ejs',{event});
-}))
+})
 
 //update route
-app.put('/events/:id',wrapAsync(async(req,res)=>{
-    if(!req.body.event){
-        throw new ExpressError(400,"Send valid data!");
-     }
+app.put('/events/:id',async(req,res)=>{
     let {id}=req.params;
     await Events.findByIdAndUpdate(id,{...req.body.event});//sec argument is an object containing all new values , we are destructuring it so that pass in to update
     res.redirect(`/events/${id}`);
-}))
+})
 
 //delete route
-app.delete('/events/:id',wrapAsync(async(req,res)=>{
+app.delete('/events/:id',async(req,res)=>{
     let {id}=req.params;
     await Events.findByIdAndDelete(id);
     res.redirect('/events');
-}))
-
-//catch all unmatched routes
-app.use("*",(re,res,next)=>{
-    next(new ExpressError(404,"Page not found!"));
 })
-
-app.use((err,req,res,next)=>{
-    let {statusCode = 500, message = "Something went wrong!"}=err
-    res.status(statusCode).render('error.ejs',{err});
+app.use((req,res,next)=>{
+    res.send("something went wrong");
 })
 
 app.listen(8080,()=>{

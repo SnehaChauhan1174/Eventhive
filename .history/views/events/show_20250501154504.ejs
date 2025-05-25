@@ -1,0 +1,81 @@
+<% layout('/layouts/boilerplate.ejs') %>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url("<%= event.image %>") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6); /* white with opacity */
+    backdrop-filter: blur(3px);
+    animation: fadeIn 1.5s ease-in-out;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    max-width: 700px;
+    margin: auto;
+  }
+
+  .content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .content ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.1rem;
+  }
+
+  .content li {
+    margin: 0.5rem 0;
+  }
+
+  .show-btns {
+    margin-top: 1.5rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<div class="hero">
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1><%= event.title %></h1>
+    <ul>
+      <li><%= event.description %></li>
+      <li><%= event.date %></li>
+      <li><%= event.time %></li>
+      <li><%= event.location %></li>
+      <li><%= event.category %></li>
+      <li>&#8377;<%= event.price.toLocaleString('en-IN') %></li>
+      <li>Attendees: <%= event.attendeeCount %></li>
+    </ul>
+
+    <div class="show-btns">
+      <a href="/events/<%= event._id %>/edit" class="btn btn-dark">Edit Event</a>
+      <form method="post" action="/events/<%=event._id%>?_method=Delete" style="display:inline;">
+        <button class="btn btn-dark">Delete Event</button>
+      </form>
+    </div>
+  </div>
+</div>
