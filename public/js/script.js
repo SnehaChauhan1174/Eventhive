@@ -16,3 +16,21 @@
       }, false)
     })
   })()
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".review-text").forEach(p => {
+      const btn = p.parentElement.querySelector(".show-more-btn");
+
+      if (p.scrollHeight > p.clientHeight + 1) {
+        btn.classList.remove("d-none");
+
+        btn.addEventListener("click", () => {
+          const expanded = p.classList.toggle("expanded");
+          btn.textContent = expanded ? "Show Less" : "Show More";
+        });
+      }
+    });
+  });
+
+
