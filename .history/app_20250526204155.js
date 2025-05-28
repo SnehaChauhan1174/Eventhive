@@ -63,7 +63,7 @@ app.get("/events/:id",wrapAsync(async(req,res)=>{
 
 //create route
 app.post('/events',vaildateEvent,wrapAsync(async(req,res)=>{
-   let result=eventSchema.validate(req.body);
+   let res=eventSchema.validate(req.body);
    //making a new event instance
    const newEvent=new Events(req.body.event);
    await newEvent.save();
