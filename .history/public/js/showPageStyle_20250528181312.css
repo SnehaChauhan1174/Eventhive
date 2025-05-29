@@ -1,0 +1,144 @@
+ .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url("<%= event.image %>") center/cover no-repeat;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .content {
+    z-index: 1;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.4); /* Soft black translucent bg for readability */
+    border-radius: 10px;
+    max-width: 800px;
+    backdrop-filter: blur(2px);
+  }
+
+  .content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .content p,
+  .content li {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    list-style: none;
+  }
+
+  .show-btns {
+    margin-top: 1.5rem;
+  }
+
+  .show-btns a,
+  .show-btns button {
+    margin: 0 0.5rem;
+  }
+  .review-section {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 2rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    max-width: 700px;
+    backdrop-filter: blur(2px);
+  }
+
+  .review-section h4 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .star-rating {
+    direction: rtl;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+
+  .star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star-rating input[type="radio"]:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: gold;
+  }
+
+  .review-form textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: none;
+    resize: vertical;
+    font-size: 1rem;
+  }
+
+  .review-form button {
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .review-form button:hover {
+    background-color: #f0f0f0;
+  }
+  .review-section {
+  background-color: #e2d4c6;
+  
+}
+.review-text {
+  display: -webkit-box;           /* Required for -webkit-line-clamp */
+  -webkit-box-orient: vertical;   /* Required for -webkit-line-clamp */
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;                  /* Note: Currently limited browser support */
+  position:relative;
+  /* For Firefox, you might use -moz-box-orient and fallback techniques */
+}
+
+/* When expanded, remove clamp */
+.review-text.expanded {
+  display: block !important;
+  overflow: visible !important;
+  
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+}
+.show-more-btn{
+  font-size: 0.9rem;
+  color:grey;
+  border:none;
+  background: none;
+  cursor: pointer;
+  padding-left: 0;
+  text-decoration: none;
+
+}
+.show-more-btn:focus{
+  outline:none;
+}

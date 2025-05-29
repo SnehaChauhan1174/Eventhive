@@ -1,6 +1,5 @@
 const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
-const Review=require("./review.js");
+const Scehma=mongoose.Schema;
 
 const eventSchema = new mongoose.Schema({
     title: { 
@@ -55,17 +54,11 @@ const eventSchema = new mongoose.Schema({
         {
             type:Schema.Types.ObjectId,
             ref:"Review",
-        },
-    ],
+        }
+    ]
     
     
 });
-
-eventSchema.post("findOneAndDelete",async(event)=>{
-    if(event){
-        await Review.deleteMany({_id:{$in:event.reviews}})
-    }
-})
 
 const events=mongoose.model("events",eventSchema)
 module.exports=events;

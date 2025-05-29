@@ -1,6 +1,7 @@
 <% layout('/layouts/boilerplate.ejs') %>
+
 <style>
-   .hero {
+  .hero {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -109,41 +110,11 @@
   .review-form button:hover {
     background-color: #f0f0f0;
   }
-  .review-section {
-  background-color: #e2d4c6;
+  /* .review-box {
+  background-color: #f9f9f9; /* light background */
   
-}
-.review-text {
-  display: -webkit-box;           /* Required for -webkit-line-clamp */
-  -webkit-box-orient: vertical;   /* Required for -webkit-line-clamp */
-  overflow: hidden;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;                  /* Note: Currently limited browser support */
-  position:relative;
-  /* For Firefox, you might use -moz-box-orient and fallback techniques */
-}
+ 
 
-/* When expanded, remove clamp */
-.review-text.expanded {
-  display: block !important;
-  overflow: visible !important;
-  
-  -webkit-line-clamp: unset !important;
-  line-clamp: unset !important;
-}
-.show-more-btn{
-  font-size: 0.9rem;
-  color:grey;
-  border:none;
-  background: none;
-  cursor: pointer;
-  padding-left: 0;
-  text-decoration: none;
-
-}
-.show-more-btn:focus{
-  outline:none;
-}
 </style>
 
 <div class="hero">
@@ -166,65 +137,27 @@
   </div>
   
 </div>
-<div class="review-section">
-  <h4 style="color:#000">Leave a Review</h4>
+<div class="review-box">
+  <h4>Leave a Review</h4>
   <form class="review-form needs-validation" method="POST" action="/events/<%= event._id %>/reviews"
          novalidate
          >
     <div class="star-rating">
       <input type="radio" name="review[rating]" id="star5" value="5">
-      <label for="star5" style="color:rgb(60, 58, 56)">&#9733;</label>
+      <label for="star5">&#9733;</label>
       <input type="radio" name="review[rating]" id="star4" value="4">
-      <label for="star4" style="color:rgb(60, 58, 56)">&#9733;</label>
+      <label for="star4">&#9733;</label>
       <input type="radio" name="review[rating]" id="star3" value="3">
-      <label for="star3" style="color:rgb(60, 58, 56)">&#9733;</label>
+      <label for="star3">&#9733;</label>
       <input type="radio" name="review[rating]" id="star2" value="2">
-      <label for="star2" style="color:rgb(60, 58, 56)">&#9733;</label>
+      <label for="star2">&#9733;</label>
       <input type="radio" name="review[rating]" id="star1" value="1">
-      <label for="star1" style="color:rgb(60, 58, 56)">&#9733;</label>
+      <label for="star1">&#9733;</label>
     </div>
     
     <textarea name="review[comment]" placeholder="Write your review here..." required></textarea>
      <div class="invalid-feedback">Please add Comment!</div>
     
     <button type="submit">Submit Review</button>
-
   </form>
-  
   </div>
-  <hr>
- <div class="review-show-section">
-   <% if ((event.reviews.length) > 0) { %>
-  <h3 class="text-center">Hear from our Guests</h3>
-  <br>
-  <div class="container" style="max-width: 800px;"> <!-- Narrow container -->
-    <div class="row">
-      
-        <% for (let i=0; i<event.reviews.length; i++) { 
-          let review=event.reviews[i];%>
-          <div class="col-md-6 mb-4"> 
-            <div class="card h-100">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">John Doe</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary"><%= review.rating %> stars</h6>
-                <div class="position-relative">
-                  <p class="card-text review-text" id="review-<%= i %>">
-                  <%= review.comment %>  </p>
-                 
-                  <button class="btn btn-link p-0 mt-1 show-more-btn d-none"
-                   data-target="review-<%=i%>">Show More</button>
-                </div>
-                <div class="mt-auto">
-                  <form method="post" action="/events/<%=event._id%>/reviews/<%=review._id%>?_method=delete">
-                    <button class="btn btn-sm btn-dark" >Delete</button>
-                  </form>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-        <% } %>
-      <% } %>
-    </div>
-  </div>
-</div>

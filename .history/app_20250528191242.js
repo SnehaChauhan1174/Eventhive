@@ -122,7 +122,7 @@ app.post("/events/:id/reviews",vaildateReview,wrapAsync(async(req,res)=>{
 //Review delete route
 app.delete("/events/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
     let{id,reviewId}=req.params;
-    await Events.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});    
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
     await Review.findByIdAndDelete(reviewId);
     res.redirect(`/events/${id}`);
 }))

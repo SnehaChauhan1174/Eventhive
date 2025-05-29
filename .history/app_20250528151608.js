@@ -70,7 +70,7 @@ app.get('/events/new',wrapAsync(async(req,res)=>{
 //show event
 app.get("/events/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
-    const event=await Events.findById(id).populate("reviews");
+    const event=await Events.findById(id);
     res.render('events/show.ejs',{event});
 }));
 
@@ -118,14 +118,6 @@ app.post("/events/:id/reviews",vaildateReview,wrapAsync(async(req,res)=>{
     console.log("new review saved");
     res.redirect(`/events/${event._id}`);
 }));
-
-//Review delete route
-app.delete("/events/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
-    let{id,reviewId}=req.params;
-    await Events.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});    
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/events/${id}`);
-}))
 
 //catch all unmatched routes
 app.use("*",(re,res,next)=>{

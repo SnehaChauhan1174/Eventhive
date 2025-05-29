@@ -148,11 +148,11 @@ body{
 }
 
 /* Review section */
-/* .review-show-section{
+.review-show-section{
     display: flex;
-  justify-content: center; 
-  align-items: center;    
-  height: 100%;            
-  text-align: center;   
+  justify-content: center; /* Horizontal center */
+  align-items: center;     /* Vertical center */
+  height: 100%;            /* or specify height like 300px */
+  text-align: center;      /* Optional: center text inside elements */
   flex-direction: column;
-} */
+}
