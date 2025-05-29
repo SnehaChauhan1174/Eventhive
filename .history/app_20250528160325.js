@@ -119,14 +119,6 @@ app.post("/events/:id/reviews",vaildateReview,wrapAsync(async(req,res)=>{
     res.redirect(`/events/${event._id}`);
 }));
 
-//Review delete route
-app.delete("/events/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
-    let{id,reviewId}=req.params;
-    await Events.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});    
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/events/${id}`);
-}))
-
 //catch all unmatched routes
 app.use("*",(re,res,next)=>{
     next(new ExpressError(404,"Page not found!"));

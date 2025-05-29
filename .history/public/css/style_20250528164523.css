@@ -84,7 +84,7 @@ body{
     padding: 5px 10px 5px 10px;
     border-radius: 7px;
 }
-.card{
+.event-card{
     border: none !important;
     margin-bottom: 2rem;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -108,7 +108,7 @@ body{
 .event-link{
     text-decoration: none;
 }
-.card:hover{
+.event-card:hover{
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
@@ -146,13 +146,3 @@ body{
 .edit-btnn{
     background-color: #584533 !important;
 }
-
-/* Review section */
-/* .review-show-section{
-    display: flex;
-  justify-content: center; 
-  align-items: center;    
-  height: 100%;            
-  text-align: center;   
-  flex-direction: column;
-} */
