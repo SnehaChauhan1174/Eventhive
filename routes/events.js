@@ -1,7 +1,21 @@
 const express=require('express');
 const router=express.Router();
-const Event=require('../models/eventListing');
+const Events=require('../models/eventListing');
+const {eventSchema,reviewSchema}=require('../schema.js');
+const wrapAsync=require('../utils/wrapAsync');
+const ExpressError=require('../utils/ExpressError');
 
+
+const vaildateEvent=(req,res,next)=>{
+    let {error}=eventSchema.validate(req.body);
+  
+    if(error){
+        let errMsg=error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        next();
+    }
+}
 
 //all events
 router.get('/',async(req,res)=>{
@@ -24,6 +38,7 @@ router.get("/:id",wrapAsync(async(req,res)=>{
 //create route
 router.post('/',vaildateEvent,wrapAsync(async(req,res)=>{
    let result=eventSchema.validate(req.body);
+  
    //making a new event instance
    const newEvent=new Events(req.body.event);
    await newEvent.save();
@@ -54,13 +69,6 @@ router.delete('/:id',wrapAsync(async(req,res)=>{
     await Events.findByIdAndDelete(id);
     res.redirect('/events');
 }));
-// router.get('/',async(req,res)=>{
-//     try{
-//         const events=await Event.find();//collection mei already data inserted h
-//         res.json(events);
-//     }catch(error){
-//         res.status(500).json({message:'server error',error})
-//     }
-// })
+
 
 module.exports=router;
