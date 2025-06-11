@@ -9,7 +9,6 @@ module.exports.eventSchema=Joi.object({
         category:Joi.string().required(),
         price:Joi.number().required(),
         image:Joi.string().allow("",null),
-        attendeeCount:Joi.number().required(),
     }).required()
 })
 
