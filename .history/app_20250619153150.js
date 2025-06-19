@@ -11,9 +11,8 @@ const passport=require('passport');
 const LocalStrategy=require('passport-local');
 const User=require('./models/user.js');
 
-const eventsRouter=require('./routes/events.js');
-const reviewsRouter=require('./routes/review.js');
-const userRouter=require('./routes/user.js');
+const events=require('./routes/events.js');
+const reviews=require('./routes/review.js');
 
 const MONGO_URL='mongodb://127.0.0.1:27017/EventHive';
 
@@ -53,7 +52,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.get('/home',(req,res)=>{
     res.send('hi root');
 });
@@ -69,18 +67,8 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.get('/demouser',async(req,res)=>{
-    let fakeUser=new User({
-        email:"stud@gmail.com",
-        username:"deltaa-stud",
-    })
-    let registeredUser=await User.register(fakeUser,"helloworld");
-    res.send(registeredUser);
-})
-
-app.use('/events',eventsRouter);
-app.use('/events/:id/reviews',reviewsRouter);
-app.use('/',userRouter);
+app.use('/events',events);
+app.use('/events/:id/reviews',reviews);
 
 //catch all unmatched routes
 app.use("*",(re,res,next)=>{

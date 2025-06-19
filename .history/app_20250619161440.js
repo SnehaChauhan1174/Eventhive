@@ -80,7 +80,6 @@ app.get('/demouser',async(req,res)=>{
 
 app.use('/events',eventsRouter);
 app.use('/events/:id/reviews',reviewsRouter);
-app.use('/',userRouter);
 
 //catch all unmatched routes
 app.use("*",(re,res,next)=>{

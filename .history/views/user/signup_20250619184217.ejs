@@ -1,0 +1,70 @@
+<% layout('/layouts/boilerplate.ejs') %>
+
+<div class="row mt-3">
+    <div class="col-5 offset-3">
+        <div class="signupCard">
+            <h3>Sign Up</h3>
+            <hr>
+            <form action="/signup" 
+            method="POST" onsubmit="return validateEmail() && validatePassword()"
+            class="needs-validation" novalidate>
+            <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input name="username" id="username" class="form-control" required>
+            <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" 
+            name="email" id="email" 
+            placeholder="abc@gmail.com"
+            class="form-control" required>
+            <div class="invalid-feedback">Enter Valid Email!</div>
+            </div>
+
+            <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" 
+            name="password" id="password" 
+            placeholder="Enter password"
+            class="form-control" required>
+            <div class="invalid-feedback">Set Password more than 8 characters!</div>
+            </div>
+            <button class="btn btn-success">Sign Up</button>
+            
+        </div>
+        </form>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function validateEmail(){
+        const emailInput=document.getElementById("email");
+        const email=emailInput.value.trim();
+        const regex=/^[a-zA-Z0-9._%+-]+@(?:gmail|yahoo|outlook)\.com$/;
+        if(!regex.test(email)){
+            emailInput.classList.add("is-invalid");
+            return false;//prevent from submission
+        }else{
+            emailInput.classList.remove("is-invalid");
+            emailInput.classList.add('is-valid');
+            return true;
+        }
+    }
+    function validatePassword(){
+        const passInp=document.getElementById("password");
+        const pass=passInp.value;
+        if(pass.length<8){
+            passInp.classList.add('is-invalid');
+            return false;
+        }
+        else{
+            passInp.classList.remove('is-invalid');
+            passInp.classList.add('is-valid');
+            return true;
+        }
+    }
+</script>
