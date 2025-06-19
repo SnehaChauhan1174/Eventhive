@@ -20,7 +20,6 @@ const vaildateEvent=(req,res,next)=>{
 //all events
 router.get('/',async(req,res)=>{
     const allEvents=await Events.find({});
-    req.flash('success','Welcome to our events!');
     res.render('events/allEvents.ejs',{allEvents}); 
 });
 
@@ -33,10 +32,6 @@ router.get('/new',wrapAsync(async(req,res)=>{
 router.get("/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id).populate("reviews");
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
     res.render('events/show.ejs',{event});
 }));
 
@@ -47,7 +42,7 @@ router.post('/',vaildateEvent,wrapAsync(async(req,res)=>{
    //making a new event instance
    const newEvent=new Events(req.body.event);
    await newEvent.save();
-   req.flash('success','Your Event listed!');
+   req.flash('success','New listing created');
    res.redirect('/events');
 
 }));
@@ -56,11 +51,6 @@ router.post('/',vaildateEvent,wrapAsync(async(req,res)=>{
 router.get('/:id/edit',wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
-    req.flash('success','Event edited!');
     res.render('events/edit.ejs',{event});
 }));
 
@@ -71,7 +61,6 @@ router.put('/:id',vaildateEvent,wrapAsync(async(req,res)=>{
     // }
     let {id}=req.params;
     await Events.findByIdAndUpdate(id,{...req.body.event});//sec argument is an object containing all new values , we are destructuring it so that pass in to update
-    req.flash('success','Event updated!');
     res.redirect(`/events/${id}`);
 }));
 
@@ -79,7 +68,6 @@ router.put('/:id',vaildateEvent,wrapAsync(async(req,res)=>{
 router.delete('/:id',wrapAsync(async(req,res)=>{
     let {id}=req.params;
     await Events.findByIdAndDelete(id);
-    req.flash('success','Event deleted!');
     res.redirect('/events');
 }));
 

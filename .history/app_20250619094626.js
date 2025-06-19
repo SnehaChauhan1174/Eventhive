@@ -6,7 +6,7 @@ const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const ExpressError=require('./utils/ExpressError');
 const session=require('express-session');
-const flash=require('connect-flash');
+const flash=require('connext-flash');
 
 const events=require('./routes/events.js');
 const reviews=require('./routes/review.js');
@@ -53,7 +53,6 @@ async function main(){
 
 app.use((req,res,next)=>{
     res.locals.success=req.flash('success');
-    res.locals.error=req.flash('error');
     next();
 })
 

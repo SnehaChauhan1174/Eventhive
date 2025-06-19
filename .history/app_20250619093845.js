@@ -6,7 +6,6 @@ const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const ExpressError=require('./utils/ExpressError');
 const session=require('express-session');
-const flash=require('connect-flash');
 
 const events=require('./routes/events.js');
 const reviews=require('./routes/review.js');
@@ -40,22 +39,14 @@ const sessionOptions={
 }
 
 app.use(session(sessionOptions));
-app.use(flash());//flash used before routes
-
-app.get('/home',(req,res)=>{
-    res.send('hi root');
-});
-
 
 async function main(){
     await mongoose.connect(MONGO_URL);
 }
 
-app.use((req,res,next)=>{
-    res.locals.success=req.flash('success');
-    res.locals.error=req.flash('error');
-    next();
-})
+app.get('/home',(req,res)=>{
+    res.send('hi root');
+});
 
 app.use('/events',events);
 app.use('/events/:id/reviews',reviews);

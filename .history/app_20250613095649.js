@@ -5,8 +5,6 @@ const path=require('path');
 const methodOverride=require('method-override');
 const ejsMate=require('ejs-mate');
 const ExpressError=require('./utils/ExpressError');
-const session=require('express-session');
-const flash=require('connect-flash');
 
 const events=require('./routes/events.js');
 const reviews=require('./routes/review.js');
@@ -28,34 +26,16 @@ app.use(methodOverride('_method'));
 app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,'/public')));
 
-const sessionOptions={
-    secret:'keyboardCat',
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-        expires:Date.now() + 7*24*60*60*1000,
-        maxAge:7*24*60*60*1000,
-        httpOnly:true,
-    }
-}
-
-app.use(session(sessionOptions));
-app.use(flash());//flash used before routes
-
-app.get('/home',(req,res)=>{
-    res.send('hi root');
-});
-
 
 async function main(){
     await mongoose.connect(MONGO_URL);
 }
 
-app.use((req,res,next)=>{
-    res.locals.success=req.flash('success');
-    res.locals.error=req.flash('error');
-    next();
-})
+
+
+app.get('/home',(req,res)=>{
+    res.send('hi root');
+});
 
 app.use('/events',events);
 app.use('/events/:id/reviews',reviews);
@@ -71,5 +51,6 @@ app.use((err,req,res,next)=>{
 });
 
 app.listen(8080,()=>{
+
     console.log('server is listening to port 8080');
 });

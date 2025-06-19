@@ -33,10 +33,7 @@ router.get('/new',wrapAsync(async(req,res)=>{
 router.get("/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id).populate("reviews");
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
+    
     res.render('events/show.ejs',{event});
 }));
 
@@ -56,10 +53,6 @@ router.post('/',vaildateEvent,wrapAsync(async(req,res)=>{
 router.get('/:id/edit',wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
     req.flash('success','Event edited!');
     res.render('events/edit.ejs',{event});
 }));

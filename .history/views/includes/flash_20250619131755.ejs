@@ -1,0 +1,18 @@
+<% if(success && success.length) { %>
+   <div class="alert alert-success alert-dismissible col-6 offset-3" role="alert">
+     <%= success %>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   
+<% } %>
+<!-- success var that has been stored into res.locals
+ now success always exist as an array but its length will be 0 if there is no message so we 
+ does a checkpoint on success ki length -->
+
+ <% if(error && error.length) { %>
+   <div class="alert alert-danger alert-dismissible col-6 offset-3" role="alert">
+     <%= error %>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   
+<% } %>
