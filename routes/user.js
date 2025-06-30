@@ -3,6 +3,7 @@ const router=express.Router({mergeParams:true});
 const User=require('../models/user.js');
 const wrapAsync = require("../utils/wrapAsync");
 const e = require("connect-flash");
+const passport=require('passport');
 
 router.get('/signup',(req,res)=>{
     res.render('user/signup.ejs');
@@ -24,4 +25,26 @@ router.post('/signup',wrapAsync(async(req,res)=>{
     }
     
 }))
+
+router.get('/login',(req,res)=>{
+    res.render("user/login.ejs");
+})
+router.post('/login',
+    passport.authenticate('local',{
+        failureRedirect:'/login',
+        failureFlash:true
+    }),
+    async(req,res)=>{
+       req.flash('success','Logged In');
+    }
+)
+// The GET request to /login serves the HTML login page (with the form).
+
+// When you submit the form, the POST request to /login sends the login data (like username and password) 
+// to the same route but with a different HTTP method.
+
+//to verify username that can be done by passport authenticate mthos
+//automatically we pass it as a middleware.
+//local is a strategy 
 module.exports=router;
+
