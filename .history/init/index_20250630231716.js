@@ -17,7 +17,7 @@ async function main(){
 }
 
 const initDB=async()=>{
-    await EventListing.deleteMany({});
+    EventListing.deleteMany({});
     initData.data=initData.data.map((obj)=>({...obj,organizer:"6862c458c46189ce19515565"}));
     await EventListing.insertMany(initData.data);
     console.log('data was intialized');

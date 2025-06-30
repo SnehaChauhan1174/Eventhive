@@ -33,8 +33,7 @@ router.get('/new',isLoggedIn,wrapAsync(async(req,res)=>{
 //show event
 router.get("/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
-    const event=await Events.findById(id).populate("reviews").populate("organizer");
-    console.log(event);
+    const event=await Events.findById(id).populate("reviews");
     if(!event){
         req.flash('error','Event does not exist!');
         res.redirect('/events');
@@ -49,7 +48,6 @@ router.post('/',
   
    //making a new event instance
    const newEvent=new Events(req.body.event);
-   newEvent.organizer=req.user._id;
    await newEvent.save();
    req.flash('success','Your Event listed!');
    res.redirect('/events');

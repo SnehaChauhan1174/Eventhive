@@ -4,7 +4,6 @@ const User=require('../models/user.js');
 const wrapAsync = require("../utils/wrapAsync");
 const err = require("connect-flash");
 const passport=require('passport');
-const { saveRedirectUrl } = require("../middleware.js");
 
 
 router.get('/signup',(req,res)=>{
@@ -18,14 +17,8 @@ router.post('/signup',wrapAsync(async(req,res)=>{
         const newUser=new User({email,username,password});
         const registeredUser=await User.register(newUser,password);
         console.log(registeredUser);
-        req.login(registeredUser,(err)=>{
-            if(err){
-                return next(err);
-            }
-            req.flash('success','User got registered!');
-            res.redirect('/events');
-        })
-        
+        req.flash('success','User got registered!');
+        res.redirect('/events');
 
     }catch(err){
         req.flash('error',err.message);
@@ -37,16 +30,14 @@ router.post('/signup',wrapAsync(async(req,res)=>{
 router.get('/login',(req,res)=>{
     res.render("user/login.ejs");
 })
-router.post('/login',saveRedirectUrl,
+router.post('/login',
     passport.authenticate('local',{
         failureRedirect:'/login',
         failureFlash:true
     }),
     async(req,res)=>{
        req.flash('success','Logged In');
-       const redirect=res.locals.redirectUrl || '/events';
-
-       res.redirect(redirect);
+       res.redirect('/events');
     }
 )
 // The GET request to /login serves the HTML login page (with the form).

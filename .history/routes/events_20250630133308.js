@@ -4,7 +4,7 @@ const Events=require('../models/eventListing');
 const {eventSchema,reviewSchema}=require('../schema.js');
 const wrapAsync=require('../utils/wrapAsync');
 const ExpressError=require('../utils/ExpressError');
-const {isLoggedIn}=require('../middleware.js');
+
 
 const vaildateEvent=(req,res,next)=>{
     let {error}=eventSchema.validate(req.body);
@@ -25,16 +25,18 @@ router.get('/',async(req,res)=>{
 });
 
 //creating new event
-router.get('/new',isLoggedIn,wrapAsync(async(req,res)=>{
-    
+router.get('/new',wrapAsync(async(req,res)=>{
+    if(req.isAuthenticated()){
+        req.flash('error','You must be logged to create An Event!');
+        res.redirect('/login');
+    }
     res.render('events/new.ejs');
 }));
 
 //show event
 router.get("/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
-    const event=await Events.findById(id).populate("reviews").populate("organizer");
-    console.log(event);
+    const event=await Events.findById(id).populate("reviews");
     if(!event){
         req.flash('error','Event does not exist!');
         res.redirect('/events');
@@ -43,13 +45,11 @@ router.get("/:id",wrapAsync(async(req,res)=>{
 }));
 
 //create route
-router.post('/',
-    vaildateEvent,wrapAsync(async(req,res)=>{
+router.post('/',vaildateEvent,wrapAsync(async(req,res)=>{
    let result=eventSchema.validate(req.body);
   
    //making a new event instance
    const newEvent=new Events(req.body.event);
-   newEvent.organizer=req.user._id;
    await newEvent.save();
    req.flash('success','Your Event listed!');
    res.redirect('/events');
@@ -57,8 +57,7 @@ router.post('/',
 }));
 
 //edit route
-router.get('/:id/edit',isLoggedIn,
-    wrapAsync(async(req,res)=>{
+router.get('/:id/edit',wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
     if(!event){
@@ -70,8 +69,7 @@ router.get('/:id/edit',isLoggedIn,
 }));
 
 //update route
-router.put('/:id',isLoggedIn,
-    vaildateEvent,wrapAsync(async(req,res)=>{
+router.put('/:id',vaildateEvent,wrapAsync(async(req,res)=>{
     // if(!req.body.event){
     //     throw new ExpressError(400,"Send valid data!");
     // }
@@ -82,8 +80,7 @@ router.put('/:id',isLoggedIn,
 }));
 
 //delete route
-router.delete('/:id',isLoggedIn,
-    wrapAsync(async(req,res)=>{
+router.delete('/:id',wrapAsync(async(req,res)=>{
     let {id}=req.params;
     await Events.findByIdAndDelete(id);
     req.flash('success','Event deleted!');

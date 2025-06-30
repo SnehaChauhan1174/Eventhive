@@ -8,23 +8,23 @@ const userSchema=new Schema({
         type:String,
         required:true
     },
-    // role:{
-    //    type:String,
-    //    enum:['attendee','organizer'],
-    //    default:'attendee'
-    // },
+    role:{
+       type:String,
+       enum:['attendee','organizer'],
+       default:'attendee'
+    },
     createdAt:{type:Date,default:Date.now},
     
-    // eventsCreated:[//for organizers
-    //     {type:Schema.Types.ObjectId,
-    //         ref:'Event'
-    //     }
-    // ],
-    // eventsBooked:[//for attendees
-    //     {type:Schema.Types.ObjectId,
-    //         ref:'Event'
-    //     }
-    // ],
+    eventsCreated:[//for organizers
+        {type:Schema.Types.ObjectId,
+            ref:'Event'
+        }
+    ],
+    eventsBooked:[//for attendees
+        {type:Schema.Types.ObjectId,
+            ref:'Event'
+        }
+    ],
     isVerified:{
         type:Boolean,
         default:false

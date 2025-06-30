@@ -49,7 +49,6 @@ router.post('/',
   
    //making a new event instance
    const newEvent=new Events(req.body.event);
-   newEvent.organizer=req.user._id;
    await newEvent.save();
    req.flash('success','Your Event listed!');
    res.redirect('/events');

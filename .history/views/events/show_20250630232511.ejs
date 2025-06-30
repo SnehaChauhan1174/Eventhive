@@ -156,8 +156,7 @@
     <p><%= event.category %></p>
     <p>&#8377;<%= event.price.toLocaleString('en-IN') %></p>
     <p>Attendees: <%= event.attendeeCount %></p>
-    <hr>
-    <i> Orgainzed by: <%= event.organizer.username %></i>
+    <i> Orgainzed by: <%= event.organizer.uername %></i>
 
     <div class="show-btns">
       <a href="/events/<%= event._id %>/edit" class="btn btn-light">Edit Event</a>

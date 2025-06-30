@@ -44,9 +44,7 @@ router.post('/login',saveRedirectUrl,
     }),
     async(req,res)=>{
        req.flash('success','Logged In');
-       const redirect=res.locals.redirectUrl || '/events';
-
-       res.redirect(redirect);
+       res.redirect(res.locals.redirectUrl);
     }
 )
 // The GET request to /login serves the HTML login page (with the form).

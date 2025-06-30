@@ -57,7 +57,7 @@ const eventSchema = new mongoose.Schema({
     ],
     organizer: { 
         type: Schema.Types.ObjectId, 
-        ref: 'User',
+        ref: 'User', required: true 
     }, // Reference to user who created the event
     
     
