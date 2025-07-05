@@ -6,33 +6,13 @@ const err = require("connect-flash");
 const passport=require('passport');
 const { saveRedirectUrl } = require("../middleware.js");
 
+const userController=require('../controllers/users.js');
 
 router.get('/signup',(req,res)=>{
     res.render('user/signup.ejs');
 })
 
-router.post('/signup',wrapAsync(async(req,res)=>{
-    try{
-        let {username,email,password}=req.body;
-        //ab hume ek new user create krna h uske liye user model require krna pdega
-        const newUser=new User({email,username,password});
-        const registeredUser=await User.register(newUser,password);
-        console.log(registeredUser);
-        req.login(registeredUser,(err)=>{
-            if(err){
-                return next(err);
-            }
-            req.flash('success','User got registered!');
-            res.redirect('/events');
-        })
-        
-
-    }catch(err){
-        req.flash('error',err.message);
-        res.redirect('/signup');
-    }
-    
-}))
+router.post('/signup',wrapAsync(userController.signup));
 
 router.get('/login',(req,res)=>{
     res.render("user/login.ejs");
@@ -42,12 +22,7 @@ router.post('/login',saveRedirectUrl,
         failureRedirect:'/login',
         failureFlash:true
     }),
-    async(req,res)=>{
-       req.flash('success','Logged In');
-       const redirect=res.locals.redirectUrl || '/events';
-
-       res.redirect(redirect);
-    }
+    userController.login
 )
 // The GET request to /login serves the HTML login page (with the form).
 
@@ -58,14 +33,6 @@ router.post('/login',saveRedirectUrl,
 //automatically we pass it as a middleware.
 //local is a strategy 
 
-router.get('/logout',(req,res,next)=>{
-    req.logout((err)=>{
-        if(err){
-            return next(err);
-        }
-        req.flash('success','you are logged out!');
-        res.redirect('/events');
-    })
-})
+router.get('/logout',userController.logout)
 module.exports=router;
 

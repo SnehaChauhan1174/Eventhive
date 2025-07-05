@@ -6,81 +6,32 @@ const wrapAsync=require('../utils/wrapAsync');
 const ExpressError=require('../utils/ExpressError');
 const {isLoggedIn, isOwner,vaildateEvent}=require('../middleware.js');
 
+const eventController=require('../controllers/events.js');
 //all events
-router.get('/',async(req,res)=>{
-    const allEvents=await Events.find({});
-    req.flash('success','Welcome to our events!');
-    res.render('events/allEvents.ejs',{allEvents}); 
-});
+router.get('/',wrapAsync(eventController.index));
 
 //creating new event
-router.get('/new',isLoggedIn,wrapAsync(async(req,res)=>{
-    
-    res.render('events/new.ejs');
-}));
+router.get('/new',isLoggedIn,wrapAsync(eventController.renderNewForm));
 
 //show event
-router.get("/:id",wrapAsync(async(req,res)=>{
-    const {id}=req.params;
-    const event=await Events.findById(id)
-    .populate({path:"reviews",populate:{path:'author'}})
-    .populate("organizer");
-    console.log(event);
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
-    res.render('events/show.ejs',{event});
-}));
+router.get("/:id",wrapAsync(eventController.showEvent));
 
 //create route
 router.post('/',
-    vaildateEvent,wrapAsync(async(req,res)=>{
-   let result=eventSchema.validate(req.body);
-  
-   //making a new event instance
-   const newEvent=new Events(req.body.event);
-   newEvent.organizer=req.user._id;
-   await newEvent.save();
-   req.flash('success','Your Event listed!');
-   res.redirect('/events');
-
-}));
+    vaildateEvent,wrapAsync(eventController.createEvent));
 
 //edit route
 router.get('/:id/edit',isLoggedIn,isOwner,
-    wrapAsync(async(req,res)=>{
-    const {id}=req.params;
-    const event=await Events.findById(id);
-    if(!event){
-        req.flash('error','Event does not exist!');
-        res.redirect('/events');
-    }
-    req.flash('success','Event edited!');
-    res.render('events/edit.ejs',{event});
-}));
+    wrapAsync(eventController.editEvent));
 
 //update route
 router.put('/:id',isLoggedIn,
     isOwner,
-    vaildateEvent,wrapAsync(async(req,res)=>{
-    // if(!req.body.event){
-    //     throw new ExpressError(400,"Send valid data!");
-    // }
-    let {id}=req.params;
-    await Events.findByIdAndUpdate(id,{...req.body.event});//sec argument is an object containing all new values , we are destructuring it so that pass in to update
-    req.flash('success','Event updated!');
-    res.redirect(`/events/${id}`);
-}));
+    vaildateEvent,wrapAsync(eventController.update));
 
 //delete route
 router.delete('/:id',isLoggedIn,isOwner,
-    wrapAsync(async(req,res)=>{
-    let {id}=req.params;
-    await Events.findByIdAndDelete(id);
-    req.flash('success','Event deleted!');
-    res.redirect('/events');
-}));
+    wrapAsync(eventController.delete));
 
 
 module.exports=router;
