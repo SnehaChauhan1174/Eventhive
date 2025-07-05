@@ -6,7 +6,6 @@ const wrapAsync=require('../utils/wrapAsync');
 const ExpressError=require('../utils/ExpressError');
 const {isLoggedIn, isOwner,vaildateEvent}=require('../middleware.js');
 
-
 //all events
 router.get('/',async(req,res)=>{
     const allEvents=await Events.find({});
@@ -23,7 +22,9 @@ router.get('/new',isLoggedIn,wrapAsync(async(req,res)=>{
 //show event
 router.get("/:id",wrapAsync(async(req,res)=>{
     const {id}=req.params;
-    const event=await Events.findById(id).populate("reviews").populate("organizer");
+    const event=await Events.findById(id)
+    .populate({path:"reviews",populate:{path:'author'}})
+    .populate("organizer");
     console.log(event);
     if(!event){
         req.flash('error','Event does not exist!');

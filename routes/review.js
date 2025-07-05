@@ -1,18 +1,19 @@
 const express=require("express");
 const router=express.Router({mergeParams:true});
-
 const wrapAsync=require('../utils/wrapAsync');
 const ExpressError=require('../utils/ExpressError');
 const Review=require('../models/review');
 const Events=require('../models/eventListing');
-const {vaildateReview}=require('../middleware.js');
-
+const {vaildateReview,isLoggedIn, isReviewAuthor}=require('../middleware.js');
 
 //Review create route
-router.post("/",vaildateReview,wrapAsync(async(req,res)=>{
+router.post("/",isLoggedIn,
+    vaildateReview,wrapAsync(async(req,res)=>{
     console.log(req.params.id);
     let event = await Events.findById(req.params.id);
     let newReview = new Review(req.body.review);
+    newReview.author = req.user._id;
+    console.log(newReview);
     event.reviews.push(newReview);
     await newReview.save();
     await event.save();
@@ -22,7 +23,10 @@ router.post("/",vaildateReview,wrapAsync(async(req,res)=>{
 }));
 
 //Review delete route
-router.delete("/:reviewId",wrapAsync(async(req,res)=>{
+router.delete("/:reviewId",
+    isLoggedIn,
+    isReviewAuthor,
+    wrapAsync(async(req,res)=>{
     let{id,reviewId}=req.params;
     await Events.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});    
     await Review.findByIdAndDelete(reviewId);
