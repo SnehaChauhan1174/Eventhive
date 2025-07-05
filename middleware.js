@@ -1,4 +1,5 @@
 const Events=require('./models/eventListing');
+const Review=require('./models/review');
 const {eventSchema,reviewSchema}=require('./schema.js');
 const ExpressError=require('./utils/ExpressError');
 
@@ -19,7 +20,7 @@ module.exports.saveRedirectUrl=(req,res,next)=>{
     
 }
 
-module.exports.isOwner=async(res,req,next)=>{
+module.exports.isOwner=async(req,res,next)=>{
     let {id}=req.params;
     let event = await Events.findById(id);
     if(!event.organizer.equals(res.locals.currUser._id)){
@@ -47,4 +48,14 @@ module.exports.vaildateReview=(req,res,next)=>{
     }else{
         next();
     }
+}
+
+module.exports.isReviewAuthor=async(req,res,next)=>{
+    let {id,reviewId}=req.params;
+    let review = await Review.findById(reviewId);
+    if(!review.author.equals(res.locals.currUser._id)){
+        req.flash("error","You are not an author of this review");
+        return res.redirect(`/events/${id}`);
+    }
+    next();
 }
