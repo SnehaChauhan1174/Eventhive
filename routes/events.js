@@ -4,18 +4,8 @@ const Events=require('../models/eventListing');
 const {eventSchema,reviewSchema}=require('../schema.js');
 const wrapAsync=require('../utils/wrapAsync');
 const ExpressError=require('../utils/ExpressError');
-const {isLoggedIn}=require('../middleware.js');
+const {isLoggedIn, isOwner,vaildateEvent}=require('../middleware.js');
 
-const vaildateEvent=(req,res,next)=>{
-    let {error}=eventSchema.validate(req.body);
-  
-    if(error){
-        let errMsg=error.details.map((el)=>el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
-}
 
 //all events
 router.get('/',async(req,res)=>{
@@ -57,7 +47,7 @@ router.post('/',
 }));
 
 //edit route
-router.get('/:id/edit',isLoggedIn,
+router.get('/:id/edit',isLoggedIn,isOwner,
     wrapAsync(async(req,res)=>{
     const {id}=req.params;
     const event=await Events.findById(id);
@@ -71,6 +61,7 @@ router.get('/:id/edit',isLoggedIn,
 
 //update route
 router.put('/:id',isLoggedIn,
+    isOwner,
     vaildateEvent,wrapAsync(async(req,res)=>{
     // if(!req.body.event){
     //     throw new ExpressError(400,"Send valid data!");
@@ -82,7 +73,7 @@ router.put('/:id',isLoggedIn,
 }));
 
 //delete route
-router.delete('/:id',isLoggedIn,
+router.delete('/:id',isLoggedIn,isOwner,
     wrapAsync(async(req,res)=>{
     let {id}=req.params;
     await Events.findByIdAndDelete(id);
